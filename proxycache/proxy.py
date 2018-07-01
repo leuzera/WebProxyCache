@@ -1,10 +1,11 @@
 import logging
-import urllib.request as req
+from .cache import Cache
+
 from http.server import BaseHTTPRequestHandler
 
 
 class Proxy(BaseHTTPRequestHandler):
     def do_GET(self):
-        res = req.urlopen(self.path)
-        self.wfile.write(res.read())
-        self.send_response(res.getcode())
+        res = Cache().request(self.path)
+        self.wfile.write(res.content)
+        self.send_response(res.status_code)
