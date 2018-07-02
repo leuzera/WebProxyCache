@@ -1,30 +1,44 @@
-import sqlite3
-import requests
 import logging
-
+from .page import Page, Base
+from sqlalchemy import create_engine
+from sqlalchemy.sql import exists
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.engine.url import URL
 
 class Cache:
-    def __init__(self):
-        self.conn = sqlite3.connect('database.db')
-        self.conn.execute('CREATE TABLE IF NOT EXISTS cache '
-                          '(id text primary key not null,'
-                          'cacheControl text ,'
-                          'expires date ,'
-                          'etag text,'
-                          'page blob)')
-        self.conn.commit()
+    def __init__(self, database):
+        url = URL('sqlite', database=database)
+        engine = create_engine(url)
+        session = sessionmaker(bind=engine)
+        self.session = session()
+        Base.metadata.create_all(engine)
 
-    def request(self, path):
-        res = requests.get(path)
-        headers = res.headers
+    def is_cached(self, path):
+        (ret, ) = self.session.query(exists().where(Page.path == path))
+        return ret[0]
 
-        self.conn.execute("INSERT OR IGNORE INTO cache "
-                          "(id, cacheControl, expires, etag, page) VALUES (?,?,?,?,?)",
-                          [path,
-                           headers.get('Cache-Control'),
-                           headers.get('Expires'),
-                           headers.get('Etag'),
-                           sqlite3.Binary(res.content)])
-        self.conn.commit()
+    def put_page(self, response):
+        headers = response.headers
+        page = Page(response.url,
+                    headers.get('Cache-Control'),
+                    headers.get('expires'),
+                    headers.get('Etag'),
+                    response.content)
+        self.session.add(page)
+        self.session.commit()
+        logging.info(response.url, 'cached')
 
-        return res
+    def get_page(self, path):
+        (page,) = self.session.query(Page.content).filter(Page.path == path)
+        logging.info('%s recovered from cache', path)
+        return page.content
+
+    def clear_cache(self):
+        pass
+
+    def is_fresh(self, path):
+        pass
+
+    def page_age(self, path):
+        pass
+
