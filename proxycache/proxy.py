@@ -4,7 +4,9 @@ from .cache import Cache
 from http.server import BaseHTTPRequestHandler
 
 
+# noinspection PyPep8Naming
 class Proxy(BaseHTTPRequestHandler):
+    # noinspection PyPep8Naming
     def do_GET(self):
         cache = Cache('database.db')
 

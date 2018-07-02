@@ -5,6 +5,8 @@ Base = declarative_base()
 
 
 class Page(Base):
+    """Página em cache.
+       SQLAlchemy usa essa classe para criar uma tabela no banco de dados."""
     __tablename__ = "pages"
 
     path = Column(String, primary_key=True)
