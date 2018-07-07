@@ -10,7 +10,7 @@ class ProxyCache:
         logging.basicConfig(filename="proxy.log", level=logging.INFO)
         self.server_addr = (host, port)
         self.httpd = HTTPServer(self.server_addr, Proxy)
-        logging.info("Proxy started")
 
     def run(self):
+        logging.info("Proxy started at %s" % self.server_addr.__repr__())
         self.httpd.serve_forever()
