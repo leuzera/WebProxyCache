@@ -10,14 +10,10 @@ class Page(Base):
     __tablename__ = "pages"
 
     path = Column(String, primary_key=True)
-    cachecontrol = Column(String)
-    expires = Column(String)
-    etag = Column(String)
+    headers = Column(PickleType)
     content = Column(PickleType)
 
-    def __init__(self, path, cache, expires, etag, content):
-        self.path = path
-        self.cachecontrol = cache
-        self.expires = expires
-        self.etag = etag
-        self.content = content
+    def __init__(self, res):
+        self.path = res.url
+        self.headers = res.headers
+        self.content = res.content

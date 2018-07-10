@@ -12,12 +12,27 @@ class Proxy(BaseHTTPRequestHandler):
         self.cache = Cache()
         super().__init__(request, client_address, server)
 
+    # noinspection PyPep8Naming
+    def do_HEAD(self, page):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.send_header('Age', self.age(page))
+        self.send_header('Cache-Control', page.cachecontrol)
+        self.send_header('Etag', page.etag)
+        self.end_headers()
+
+    # noinspection PyPep8Naming
+    def do_AUTH_HEAD(self):
+        self.send_response(407)
+        self.send_header('Proxy-Authenticate', 'Basic realm=\"Test\"')
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
 
     # noinspection PyPep8Naming
     def do_GET(self):
         if self.cache.is_cached(self.path):
             page = self.cache.get_page(self.path)
-            if not self.is_fresh(self.path):
+            if not self.is_fresh(page):
                 page = requests.get(self.path, headers={"If-None-Match": page.etag})
                 if page.status_code == requests.codes.ok:
                     logging.info("Got new page")
@@ -26,16 +41,19 @@ class Proxy(BaseHTTPRequestHandler):
             page = requests.get(self.path)
             self.cache.put_page(page)
 
+        self.protocol_version = 'HTTP/1.1'
+        self.do_HEAD(page)
         self.wfile.write(page.content)
-        self.send_response(requests.codes.ok)
 
     def cache_policy(self, page):
         pass
 
-    def is_fresh(self, path):
-        headers = self.cache.get_headers(path)
-        page_date = datetime.strptime(headers[1], self.DATE_FORMAT)
+    def age(self, page):
+        page_date = datetime.strptime(page.expires, self.DATE_FORMAT)
+        return (page_date - datetime.now()).total_seconds()
 
-        age = (page_date - datetime.now()).total_seconds()
+    def is_fresh(self, page):
+        return self.age(page) > 0
 
-        return age > 0
+    def is_cacheable(self):
+        True
