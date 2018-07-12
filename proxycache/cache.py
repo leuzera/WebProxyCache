@@ -48,6 +48,7 @@ class Cache:
         """
         page = self.session.query(Page).filter(Page.path == path).first()
         logging.debug("{} recuperada".format(path))
+        self.session.query(Page).filter(Page.path == path).update({'counter': Page.counter+1})
         return page.page
 
     def update_page(self, response):

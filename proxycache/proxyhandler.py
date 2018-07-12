@@ -35,7 +35,7 @@ class ProxyHandler(BaseHTTPRequestHandler):
         if self.page.headers.get('Etag'):
             self.send_header('Etag', self.page.headers.get('Etag'))
 
-        self.send_header('Age', self.age())
+        self.send_header('Age', self._age())
         self.end_headers()
 
     # noinspection PyPep8Naming
@@ -62,7 +62,7 @@ class ProxyHandler(BaseHTTPRequestHandler):
             """Se a pagina estiver em cache, recuperamos ela"""
             logging.info("Pagina em cache")
             self.page = self.cache.get_page(self.path)
-            if not self.is_fresh():
+            if not self._is_fresh():
                 """Se ela não for fresca, verificamos se foi modificada"""
                 logging.debug("")
                 if self.page.headers.get('Etag'):
@@ -84,7 +84,7 @@ class ProxyHandler(BaseHTTPRequestHandler):
             """Se a pagina não estiver em cache, baixamos ela"""
             logging.info("Página fora do cache")
             self.page = requests.get(self.path)
-            if self.is_cacheable():
+            if self._is_cacheable():
                 """Se ela permitir ser guardade em cache, salvamos ela"""
                 self.cache.put_page(self.page)
 
@@ -104,7 +104,7 @@ class ProxyHandler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         requests.options(self.path)
 
-    def cache_policy(self):
+    def _cache_policy(self):
         """
         Verifica a politica de cache da página
 
@@ -116,7 +116,7 @@ class ProxyHandler(BaseHTTPRequestHandler):
         else:
             return policy.split(',')
 
-    def age(self):
+    def _age(self):
         """
         Verifica a idade da página em cache
 
@@ -127,23 +127,23 @@ class ProxyHandler(BaseHTTPRequestHandler):
 
         return (page_date - datetime.now()).total_seconds()
 
-    def is_fresh(self):
+    def _is_fresh(self):
         """
         Verifica se a página em cache é fresca
 
         :return:  Se é fresca (Boolean)
         """
-        current_age = timedelta(seconds=self.age())
+        current_age = timedelta(seconds=self._age())
         response_time = datetime.strptime(self.page.headers.get('Date'), self.DATE_FORMAT)
 
         if self.page.headers.get('Expires'):
             freshness_lifetime = datetime.strptime(self.page.headers.get('Expires'), self.DATE_FORMAT) - response_time
         else:
-            freshness_lifetime = self.max_age()
+            freshness_lifetime = self._max_age()
 
         return (freshness_lifetime - current_age) > timedelta(seconds=0)
 
-    def is_cacheable(self):
+    def _is_cacheable(self):
         """
         Verifica a página é passivel de cache
 
@@ -152,13 +152,13 @@ class ProxyHandler(BaseHTTPRequestHandler):
         .. note::
             Caso ``Cache-Control`` tenha ``no-cache``  a página não deve ser mantida em cache
         """
-        policy = self.cache_policy()
+        policy = self._cache_policy()
         if policy is None or 'no-cache' not in policy:
             return True
         else:
             return False
 
-    def max_age(self):
+    def _max_age(self):
         """
         Retorna a idade máxima da página
 
