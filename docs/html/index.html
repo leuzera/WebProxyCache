@@ -35,128 +35,146 @@
 <h1>Welcome to WebProxy Cache’s documentation!<a class="headerlink" href="#welcome-to-webproxy-cache-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
-<div class="section" id="module-proxycache.main">
-<span id="modulo-do-principal"></span><h2>Módulo do “principal”<a class="headerlink" href="#module-proxycache.main" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-proxycache.proxycache">
+<span id="modulo-do-proxy-cache"></span><h2>Módulo do “Proxy Cache”<a class="headerlink" href="#module-proxycache.proxycache" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="proxycache.main.ProxyCache">
-<em class="property">class </em><code class="descclassname">proxycache.main.</code><code class="descname">ProxyCache</code><span class="sig-paren">(</span><em>host=''</em>, <em>port=54321</em><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.main.ProxyCache" title="Permalink to this definition">¶</a></dt>
+<dt id="proxycache.proxycache.ProxyCache">
+<em class="property">class </em><code class="descclassname">proxycache.proxycache.</code><code class="descname">ProxyCache</code><span class="sig-paren">(</span><em>host=''</em>, <em>port=54321</em><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxycache.ProxyCache" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Configura e inicializa o servidor proxy</p>
 <dl class="method">
-<dt id="proxycache.main.ProxyCache.run">
-<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.main.ProxyCache.run" title="Permalink to this definition">¶</a></dt>
+<dt id="proxycache.proxycache.ProxyCache.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxycache.ProxyCache.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Roda para sempre</p>
 </dd></dl>
 
 </dd></dl>
 
 </div>
-<div class="section" id="module-proxycache.proxy">
-<span id="modulo-do-proxy"></span><h2>Módulo do “proxy”<a class="headerlink" href="#module-proxycache.proxy" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-proxycache.proxyhandler">
+<span id="modulo-do-proxy-handler"></span><h2>Módulo do “Proxy Handler”<a class="headerlink" href="#module-proxycache.proxyhandler" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="proxycache.proxy.Proxy">
-<em class="property">class </em><code class="descclassname">proxycache.proxy.</code><code class="descname">Proxy</code><span class="sig-paren">(</span><em>request</em>, <em>client_address</em>, <em>server</em><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxy.Proxy" title="Permalink to this definition">¶</a></dt>
+<dt id="proxycache.proxyhandler.ProxyHandler">
+<em class="property">class </em><code class="descclassname">proxycache.proxyhandler.</code><code class="descname">ProxyHandler</code><span class="sig-paren">(</span><em>request</em>, <em>client_address</em>, <em>server</em><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxyhandler.ProxyHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">http.server.BaseHTTPRequestHandler</span></code></p>
 <p>Servidor Proxy</p>
 <p>Recebe as requisições dos clientes e as trata de maneira adequada</p>
 <dl class="attribute">
-<dt id="proxycache.proxy.Proxy.DATE_FORMAT">
-<code class="descname">DATE_FORMAT</code><em class="property"> = '%a, %d %b %Y %X %Z'</em><a class="headerlink" href="#proxycache.proxy.Proxy.DATE_FORMAT" title="Permalink to this definition">¶</a></dt>
+<dt id="proxycache.proxyhandler.ProxyHandler.DATE_FORMAT">
+<code class="descname">DATE_FORMAT</code><em class="property"> = '%a, %d %b %Y %X %Z'</em><a class="headerlink" href="#proxycache.proxyhandler.ProxyHandler.DATE_FORMAT" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="proxycache.proxy.Proxy.age">
-<code class="descname">age</code><span class="sig-paren">(</span><em>page</em><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxy.Proxy.age" title="Permalink to this definition">¶</a></dt>
+<dt id="proxycache.proxyhandler.ProxyHandler.age">
+<code class="descname">age</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxyhandler.ProxyHandler.age" title="Permalink to this definition">¶</a></dt>
 <dd><p>Verifica a idade da página em cache</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>page</strong> – objeto de <code class="xref py py-class docutils literal notranslate"><span class="pre">Page</span></code></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Idade da página</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Idade da página em segundos</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="proxycache.proxy.Proxy.cache_policy">
-<code class="descname">cache_policy</code><span class="sig-paren">(</span><em>page</em><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxy.Proxy.cache_policy" title="Permalink to this definition">¶</a></dt>
+<dt id="proxycache.proxyhandler.ProxyHandler.cache_policy">
+<code class="descname">cache_policy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxyhandler.ProxyHandler.cache_policy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Verifica a politica de cache da página</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>page</strong> – objeto de <code class="xref py py-class docutils literal notranslate"><span class="pre">Page</span></code></td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">As politicas de cache da página ou None</td>
 </tr>
 </tbody>
 </table>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Não implementado</p>
-</div>
 </dd></dl>
 
 <dl class="method">
-<dt id="proxycache.proxy.Proxy.do_AUTH_HEAD">
-<code class="descname">do_AUTH_HEAD</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxy.Proxy.do_AUTH_HEAD" title="Permalink to this definition">¶</a></dt>
+<dt id="proxycache.proxyhandler.ProxyHandler.do_AUTH_HEAD">
+<code class="descname">do_AUTH_HEAD</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxyhandler.ProxyHandler.do_AUTH_HEAD" title="Permalink to this definition">¶</a></dt>
 <dd><p>Configura o cabeçalho para resposta com código HTTP 407 Proxy Authentication Required</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="proxycache.proxy.Proxy.do_GET">
-<code class="descname">do_GET</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxy.Proxy.do_GET" title="Permalink to this definition">¶</a></dt>
+<dt id="proxycache.proxyhandler.ProxyHandler.do_DELETE">
+<code class="descname">do_DELETE</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxyhandler.ProxyHandler.do_DELETE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="proxycache.proxyhandler.ProxyHandler.do_GET">
+<code class="descname">do_GET</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxyhandler.ProxyHandler.do_GET" title="Permalink to this definition">¶</a></dt>
 <dd><p>Processa todas as requisições GET recebidas</p>
 <p>Verifica se pagina está em cache e se é valida</p>
 <p>Envia a pagina em cache ou redireciona a pagina original</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="proxycache.proxy.Proxy.do_HEAD">
-<code class="descname">do_HEAD</code><span class="sig-paren">(</span><em>page</em><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxy.Proxy.do_HEAD" title="Permalink to this definition">¶</a></dt>
+<dt id="proxycache.proxyhandler.ProxyHandler.do_HEAD">
+<code class="descname">do_HEAD</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxyhandler.ProxyHandler.do_HEAD" title="Permalink to this definition">¶</a></dt>
 <dd><p>Cria o cabeçalho da resposta HTTP.</p>
 <p>Gera um cabeçalho com código HTTP 200 OK
 Configura o Content-type, Age, Cache-Control e Etag da página</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>page</strong> – objeto de <code class="xref py py-class docutils literal notranslate"><span class="pre">Page</span></code></td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="method">
-<dt id="proxycache.proxy.Proxy.is_cacheable">
-<code class="descname">is_cacheable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxy.Proxy.is_cacheable" title="Permalink to this definition">¶</a></dt>
+<dt id="proxycache.proxyhandler.ProxyHandler.do_OPTIONS">
+<code class="descname">do_OPTIONS</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxyhandler.ProxyHandler.do_OPTIONS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="proxycache.proxyhandler.ProxyHandler.do_POST">
+<code class="descname">do_POST</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxyhandler.ProxyHandler.do_POST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="proxycache.proxyhandler.ProxyHandler.do_PUT">
+<code class="descname">do_PUT</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxyhandler.ProxyHandler.do_PUT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="proxycache.proxyhandler.ProxyHandler.is_cacheable">
+<code class="descname">is_cacheable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxyhandler.ProxyHandler.is_cacheable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Verifica a página é passivel de cache</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Boolean</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Se é possivel armazenas em cache (Boolean)</td>
 </tr>
 </tbody>
 </table>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Não implementado</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Caso <code class="docutils literal notranslate"><span class="pre">Cache-Control</span></code> tenha <code class="docutils literal notranslate"><span class="pre">no-cache</span></code>  a página não deve ser mantida em cache</p>
 </div>
 </dd></dl>
 
 <dl class="method">
-<dt id="proxycache.proxy.Proxy.is_fresh">
-<code class="descname">is_fresh</code><span class="sig-paren">(</span><em>page</em><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxy.Proxy.is_fresh" title="Permalink to this definition">¶</a></dt>
+<dt id="proxycache.proxyhandler.ProxyHandler.is_fresh">
+<code class="descname">is_fresh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxyhandler.ProxyHandler.is_fresh" title="Permalink to this definition">¶</a></dt>
 <dd><p>Verifica se a página em cache é fresca</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>page</strong> – objeto de <code class="xref py py-class docutils literal notranslate"><span class="pre">Page</span></code></td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Se é fresca (Boolean)</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Boolean</td>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="proxycache.proxyhandler.ProxyHandler.max_age">
+<code class="descname">max_age</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.proxyhandler.ProxyHandler.max_age" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retorna a idade máxima da página</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Idade maxima da página em <code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.timedelta</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -166,7 +184,7 @@ Configura o Content-type, Age, Cache-Control e Etag da página</p>
 
 </div>
 <div class="section" id="module-proxycache.page">
-<span id="modulo-do-pagina"></span><h2>Módulo do “página”<a class="headerlink" href="#module-proxycache.page" title="Permalink to this headline">¶</a></h2>
+<span id="modulo-do-pagina"></span><h2>Módulo do “Página”<a class="headerlink" href="#module-proxycache.page" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="proxycache.page.Page">
 <em class="property">class </em><code class="descclassname">proxycache.page.</code><code class="descname">Page</code><span class="sig-paren">(</span><em>res</em><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.page.Page" title="Permalink to this definition">¶</a></dt>
@@ -174,13 +192,13 @@ Configura o Content-type, Age, Cache-Control e Etag da página</p>
 <p>Página em cache.
 SQLAlchemy usa essa classe para criar uma tabela no banco de dados.</p>
 <dl class="attribute">
-<dt id="proxycache.page.Page.content">
-<code class="descname">content</code><a class="headerlink" href="#proxycache.page.Page.content" title="Permalink to this definition">¶</a></dt>
+<dt id="proxycache.page.Page.counter">
+<code class="descname">counter</code><a class="headerlink" href="#proxycache.page.Page.counter" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
-<dt id="proxycache.page.Page.headers">
-<code class="descname">headers</code><a class="headerlink" href="#proxycache.page.Page.headers" title="Permalink to this definition">¶</a></dt>
+<dt id="proxycache.page.Page.page">
+<code class="descname">page</code><a class="headerlink" href="#proxycache.page.Page.page" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
@@ -192,21 +210,24 @@ SQLAlchemy usa essa classe para criar uma tabela no banco de dados.</p>
 
 </div>
 <div class="section" id="module-proxycache.cache">
-<span id="modulo-do-cache"></span><h2>Módulo do “cache”<a class="headerlink" href="#module-proxycache.cache" title="Permalink to this headline">¶</a></h2>
+<span id="modulo-do-cache"></span><h2>Módulo do “Cache”<a class="headerlink" href="#module-proxycache.cache" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="proxycache.cache.Cache">
 <em class="property">class </em><code class="descclassname">proxycache.cache.</code><code class="descname">Cache</code><a class="headerlink" href="#proxycache.cache.Cache" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Faz o gerenciamento do cache do proxy.</p>
 <dl class="method">
-<dt id="proxycache.cache.Cache.clear_cache">
-<code class="descname">clear_cache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.cache.Cache.clear_cache" title="Permalink to this definition">¶</a></dt>
-<dd><p>Limpa o cache</p>
-<p>Apaga todas as páginas salvas</p>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Não implementado</p>
-</div>
+<dt id="proxycache.cache.Cache.delete_page">
+<code class="descname">delete_page</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#proxycache.cache.Cache.delete_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apaga uma página</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – URL da pagina a ser apagada</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -217,7 +238,7 @@ SQLAlchemy usa essa classe para criar uma tabela no banco de dados.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Response.content</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Objeto <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.Response</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -261,7 +282,7 @@ SQLAlchemy usa essa classe para criar uma tabela no banco de dados.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>response</strong> – objeto :class::<cite>requests.Response</cite></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>response</strong> – objeto <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.Response</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -290,10 +311,10 @@ SQLAlchemy usa essa classe para criar uma tabela no banco de dados.</p>
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Welcome to WebProxy Cache’s documentation!</a><ul>
-<li><a class="reference internal" href="#module-proxycache.main">Módulo do “principal”</a></li>
-<li><a class="reference internal" href="#module-proxycache.proxy">Módulo do “proxy”</a></li>
-<li><a class="reference internal" href="#module-proxycache.page">Módulo do “página”</a></li>
-<li><a class="reference internal" href="#module-proxycache.cache">Módulo do “cache”</a></li>
+<li><a class="reference internal" href="#module-proxycache.proxycache">Módulo do “Proxy Cache”</a></li>
+<li><a class="reference internal" href="#module-proxycache.proxyhandler">Módulo do “Proxy Handler”</a></li>
+<li><a class="reference internal" href="#module-proxycache.page">Módulo do “Página”</a></li>
+<li><a class="reference internal" href="#module-proxycache.cache">Módulo do “Cache”</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>

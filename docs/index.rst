@@ -10,23 +10,23 @@ Welcome to WebProxy Cache's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-Módulo do "principal"
----------------------
+Módulo do "Proxy Cache"
+-----------------------
 
-.. automodule:: proxycache.main
+.. automodule:: proxycache.proxycache
     :members:
     :undoc-members:
     :show-inheritance:
 
-Módulo do "proxy"
------------------
+Módulo do "Proxy Handler"
+-------------------------
 
-.. automodule:: proxycache.proxy
+.. automodule:: proxycache.proxyhandler
     :members:
     :undoc-members:
     :show-inheritance:
 
-Módulo do "página"
+Módulo do "Página"
 ------------------
 
 .. automodule:: proxycache.page
@@ -34,7 +34,7 @@ Módulo do "página"
     :undoc-members:
     :show-inheritance:
 
-Módulo do "cache"
+Módulo do "Cache"
 -----------------
 
 .. automodule:: proxycache.cache
