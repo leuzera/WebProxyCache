@@ -8,4 +8,4 @@ Na porta TCP 54322, o proxy Web deverá apresentar informações básicas de seu
 
 Por exemplo: há quanto tempo o servidor está no ar; um ranking dos sites mais visitados; ranking dos maiores objetos armazenados; ranking dos objetos mais requisitados, etc.
 
-Para mais informações acesse a [documentação](leuzera.github.com/WebProxyCache).
+Para mais informações acesse a [documentação](https://leuzera.github.com/WebProxyCache).
