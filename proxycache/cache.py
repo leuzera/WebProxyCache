@@ -25,8 +25,9 @@ class Cache:
         :param path: URL
         :return: True caso a página esteja armazenada, False caso contrário.
         """
-        (ret,) = self.session.query(exists().where(Page.path == path))
-        return ret[0]
+        (ret,) = self.session.query(exists().where(Page.path == path)).first()
+        logging.debug("Cached: {}".format(ret))
+        return ret
 
     def put_page(self, response):
         """
@@ -37,37 +38,33 @@ class Cache:
         page = Page(response)
         self.session.add(page)
         self.session.commit()
-        logging.info(response.url)
+        logging.debug("{} salva".format(response.url))
 
     def get_page(self, path):
         """
         Retorna uma pagina armazenada em cache.
 
-        :return: Response.content
+        :return: Objeto :class:`requests.Response`
         """
         page = self.session.query(Page).filter(Page.path == path).first()
-        return page
+        logging.debug("{} recuperada".format(path))
+        return page.page
 
     def update_page(self, response):
         """
         Atualiza a página em cache para uma mais recente
 
-        :param response: objeto :class::`requests.Response`
+        :param response: objeto :class:`requests.Response`
         """
-        old_page = self.session.query(Page).filter(Page.path == response.url).first()
+        self.session.query(Page).filter(Page.path == response.url).update({'page': response})
+        logging.debug("{} atualizada".format(response.url))
 
-        old_page.headers = response.headers
-        old_page.content = response.content
-
-        self.session.commit()
-
-    def clear_cache(self):
+    def delete_page(self, path):
         """
-        Limpa o cache
+        Apaga uma página
 
-        Apaga todas as páginas salvas
-
-        .. warning::
-            Não implementado
+        :param path: URL da pagina a ser apagada
         """
-        pass
+        page = self.session.query(Page).filter(Page.path == path).first()
+        self.session.delete(page)
+        logging.debug("{} apagada".format(path))

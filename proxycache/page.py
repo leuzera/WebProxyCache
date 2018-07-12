@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, PickleType
+from sqlalchemy import Column, String, PickleType, Integer
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -12,10 +12,10 @@ class Page(Base):
     __tablename__ = "pages"
 
     path = Column(String, primary_key=True)
-    headers = Column(PickleType)
-    content = Column(PickleType)
+    page = Column(PickleType)
+    counter = Column(Integer)
 
     def __init__(self, res):
         self.path = res.url
-        self.headers = res.headers
-        self.content = res.content
+        self.page = res
+        self.counter = 1

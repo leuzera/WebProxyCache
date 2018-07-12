@@ -2,7 +2,7 @@ import logging
 
 from http.server import HTTPServer
 
-from .proxy import Proxy
+from .proxyhandler import ProxyHandler
 
 
 class ProxyCache:
@@ -10,9 +10,8 @@ class ProxyCache:
     Configura e inicializa o servidor proxy
     """
     def __init__(self, host='', port=54321):
-        logging.basicConfig(filename="proxy.log", level=logging.INFO)
         self.server_addr = (host, port)
-        self.httpd = HTTPServer(self.server_addr, Proxy)
+        self.httpd = HTTPServer(self.server_addr, ProxyHandler)
 
     def run(self):
         """Roda para sempre"""
