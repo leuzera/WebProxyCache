@@ -5,11 +5,11 @@
     <title>Proxy Status</title>
 </head>
 <body>
-    <div>
+    <div style="margin: 20px; background-color: #EEEEEE">
         Número de páginas em cache: {{ nro_pages }}
     </div>
-    <div>
-        <p>Páginas em cache:</p>
+    <div style="margin: 20px">
+        <p style="background-color: #EEEEEE">Páginas em cache:</p>
         {% for pagina in pg_access%}
             <p>{{ pagina.page.url }}</p>
         {% endfor %}
