@@ -3,16 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Proxy Status</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+    <link rel="stylesheet" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
 </head>
 <body>
-    <div style="margin: 20px; background-color: #EEEEEE">
-        Número de páginas em cache: {{ nro_pages }}
-    </div>
-    <div style="margin: 20px">
-        <p style="background-color: #EEEEEE">Páginas em cache:</p>
-        {% for pagina in pg_access%}
-            <p>{{ pagina.page.url }}</p>
-        {% endfor %}
+<div class="container">
+    <div class="row">
+        <div class="column">
+            <h1>ProxyStatus</h1>
+            <p>Estamos com {{ nro_pages }} páginas armazenadas em cache!</p>
+        </div>
+        <div class="column">
+            <table>
+            <thead>
+            <tr>
+                <th>
+                    URL
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for pagina in pg_access%}
+                <tr>
+                    <th>
+                        <a href="{{ pagina.page.url }}">{{ pagina.page.url }}</a>
+                    </th>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
     </div>
 </body>
 </html>

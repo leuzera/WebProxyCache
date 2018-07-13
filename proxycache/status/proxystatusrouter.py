@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from .cache import Cache
+from ..cache.cache import Cache
 
 app = Flask(__name__)
 

@@ -58,6 +58,7 @@ class Cache:
         :param response: objeto :class:`requests.Response`
         """
         self.session.query(Page).filter(Page.path == response.url).update({'page': response})
+        self.session.commit()
         logging.debug("{} atualizada".format(response.url))
 
     def delete_page(self, path):
