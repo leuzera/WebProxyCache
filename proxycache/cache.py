@@ -1,6 +1,6 @@
 import logging
 from .page import Page, Base
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 from sqlalchemy.sql import exists
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine.url import URL
@@ -69,3 +69,9 @@ class Cache:
         page = self.session.query(Page).filter(Page.path == path).first()
         self.session.delete(page)
         logging.debug("{} apagada".format(path))
+
+    def get_pages_top(self):
+        return self.session.query(Page).all()
+
+    def get_pages_num(self):
+        return self.session.query(func.count(Page.path)).first()[0]

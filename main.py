@@ -6,4 +6,7 @@ fileConfig('logging_config.ini')
 logger = logging.getLogger()
 
 proxy = proxycache.ProxyCache()
-proxy.run()
+flask = proxycache.ProxyStatus()
+
+proxy.start()
+flask.start()

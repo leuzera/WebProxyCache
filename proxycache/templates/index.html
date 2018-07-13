@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Proxy Status</title>
+</head>
+<body>
+    <div>
+        Número de páginas em cache: {{ nro_pages }}
+    </div>
+    <div>
+        <p>Páginas em cache:</p>
+        {% for pagina in pg_access%}
+            <p>{{ pagina.page.url }}</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
